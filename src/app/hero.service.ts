@@ -22,7 +22,6 @@ export class HeroService {
   ) { }
 
   getHeroes(): Observable<Hero[]> {
-    this.messageService.add('HeroService: fetched heroes');
     // return of(HEROES);
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(
@@ -32,7 +31,6 @@ export class HeroService {
   }
 
   getHero(id: number): Observable<Hero> {
-    this.messageService.add(`HeroService: fetched hero id=${id}`);
     // return of(HEROES.find(hero => hero.id === id));
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
@@ -52,7 +50,7 @@ export class HeroService {
   /** POST: add a new hero to the server */
   addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
+      tap((hero: Hero) => this.log(`added hero id=${hero.id}`)),
       catchError(this.handleError<Hero>('addHero'))
     );
   }
